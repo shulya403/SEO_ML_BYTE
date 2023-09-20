@@ -5,6 +5,12 @@
     <title>Hello Byte/RE</title>
 </head>
 <body>
-            Количество строк отфильтрованных их WpPosts: {{ post_count }}
+    <ul>
+        <li>Количество WpPosts всего: {{ post_count }}</li>
+        <li>Количество WpPosts имеющих теги или категории, кроме пресс_релизов: {{ filtered_by_cat_tag }}</li>
+
+    </ul>
+    <a href="clear_html.html"><b>Clear html >> </b></a>
+
 </body>
 </html>

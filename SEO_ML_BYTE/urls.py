@@ -19,5 +19,6 @@ from seo_works import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index)
+    path('', views.index),
+    path('clear_html.html', views.clear_html)
 ]
