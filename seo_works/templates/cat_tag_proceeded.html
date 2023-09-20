@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category & Tags to base relationships</title>
+</head>
+<body>
+<h1>Category & Tags to base relationships</h1>
+
+<table>
+    <tr>
+        <th>post_id</th>
+        <th>term_id</th>
+    </tr>
+    {% for i in exit %}
+        <tr>
+        <td>{{ i.fk_object_id }}</td>
+        <td>{{ i.fk_term_taxonomy_id }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

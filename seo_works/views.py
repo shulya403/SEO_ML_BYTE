@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from django.db.models import Q, F
 #import nltk
 import re
 
 # Create your views here.
 
-from .models import WpPosts, WpTermRelationships, WpTermTaxonomy, ProcessedPosts
+from .models import WpPosts, WpTermRelationships, WpTermTaxonomy, ProcessedPosts, ProcessedTermRelationship
 
 #TODO: Почистить все записи и в ProcessedPosts
 # Привязать теги cat_and_tag_query в ProcessedTermRelationship
@@ -69,6 +70,27 @@ def Clear_text(text_html):
     exit = re.sub(cleaner_tags, "", text_html)
 
     return exit
+
+def Cat_Tag_To_ProcessedTermRelationship(request): # категирии и теги из wp в proc для всех proc_post
+
+    proc_post_present = ProcessedPosts.objects.all().values_list("id_post", flat=True) # id post в proc_post
+
+    if len(proc_post_present) > 0:
+        wp_cat_tag = WpTermRelationships.objects.filter(object_id__in=proc_post_present) # выборка из исходной таблицы для proc_post_present
+
+        for cursor in proc_post_present:
+            wp_cat_tag_post = wp_cat_tag.filter(object_id=cursor)
+            for i in wp_cat_tag_post:
+                if not ProcessedTermRelationship.objects.filter(fk_object_id=cursor, fk_term_taxonomy_id=i.term_taxonomy_id).values_list('id_processed_term_relationship', flat=True):
+                   new_record = ProcessedTermRelationship(fk_object_id=cursor, fk_term_taxonomy_id=i.term_taxonomy_id)
+                   new_record.save()
+
+
+    out = {
+        "exit": ProcessedTermRelationship.objects.all().values("fk_object_id", "fk_term_taxonomy_id")
+    }
+
+    return render(request, template_name="cat_tag_proceeded.html", context=out)
 
 def Select_wpPosts_in_QS(id_start=0):
 
