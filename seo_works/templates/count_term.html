@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Count terms</title>
+</head>
+<body>
+<h1>Теги и рукис. Счетчик термов</h1>
+
+{% for i in terms_count %}
+    {{ i.fk_term_taxonomy_id }} - {{ i.fk_term_taxonomy_id__count }}<br>
+
+{% endfor %}
+
+</body>
+</html>

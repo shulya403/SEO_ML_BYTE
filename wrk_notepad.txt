@@ -1,0 +1,8 @@
+SELECT *
+FROM `wp_posts`
+WHERE ID NOT IN (SELECT `object_id` FROM `wp_term_relationships`)
+AND post_type = "post"
+AND post_status = "publish"
+ORDER BY ID DESC;
+
+post_status
