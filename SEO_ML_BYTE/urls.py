@@ -23,5 +23,6 @@ urlpatterns = [
     path('clear_html.html', views.clear_html),
     path('cat_tag_proceeded.html', views.Cat_Tag_To_ProcessedTermRelationship),
     path('count_term.html', views.count_term),
+    path('json_gen.html', views.JSON_Proceed)
 
 ]

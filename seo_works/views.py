@@ -163,5 +163,28 @@ def count_term(request):
 
     return render(request, template_name="count_term.html", context=out)
 
-def JSON_Proceed(): #данные обеих таблиц в JSON
+def JSON_Proceed(request): #данные обеих таблиц в JSON
 
+# Почитать про библиотеку json
+
+    qry_post = ProcessedPosts.objects.all()
+    qry_terms = ProcessedTermRelationship.objects.all()
+
+    dict_out = dict()
+
+    for cursor in qry_post:
+        dict_out[cursor.id_post] = {
+            "title": cursor.post_title,
+            "content": cursor.post_clear_content,
+            "cat-tag": list(qry_terms.filter(fk_object_id=cursor.id_post).values_list('fk_term_taxonomy_id', flat=True))
+        }
+
+
+    with open('./processed_content.json', 'w', encoding='utf8') as f:
+        json.dump(dict_out, f, ensure_ascii=False)
+
+    out = {
+        "how_posts": len(dict_out)
+    }
+
+    return render(request, template_name="json_gen.html", context=out)
