@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.db.models import Q, F, Count
 #import nltk
 import re
+import json
 
 import pandas
 from django_pandas.io import read_frame
@@ -12,10 +13,10 @@ from django_pandas.io import read_frame
 from .models import WpPosts, WpTermRelationships, WpTermTaxonomy, ProcessedPosts, ProcessedTermRelationship, WpTerms
 
 #TODO:
-# Очистить все таблицы Processed
-# Изьять статьи с термами "пресс-релизы" и "разное"
-# перезалить и посчитать новый term_count
 # в json базу
+## Изьять статьи с термами "пресс-релизы" и "разное"
+## перезалить и посчитать новый term_count
+## Очистить все таблицы Processed
 ## УБРАТЬ все термы кроме категорий и тегов! Привязать теги cat_and_tag_query в ProcessedTermRelationship
 ## Почистить все записи и в ProcessedPosts
 #  Посчитать число вхождения тегов. Предложить коэффициент и его в таблицу, в эксель для аугументации
@@ -161,3 +162,6 @@ def count_term(request):
     }
 
     return render(request, template_name="count_term.html", context=out)
+
+def JSON_Proceed(): #данные обеих таблиц в JSON
+
